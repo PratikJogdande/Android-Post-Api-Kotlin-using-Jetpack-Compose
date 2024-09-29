@@ -92,6 +92,13 @@ fun postData() {
     val response = remember {
         mutableStateOf("")
     }
+
+    val inputModifier = Modifier
+        .padding(16.dp)
+        .fillMaxWidth()
+
+    // Define your text style
+    val inputTextStyle = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 15.sp)
     // on below line we are creating a column.
     Column(
         // on below line we are adding a modifier to it
@@ -105,21 +112,6 @@ fun postData() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // on below line we are creating a text
-        Text(
-            // on below line we are specifying text as
-            // Session Management in Android.
-            text = "Retrofit POST Request in Android",
-            // on below line we are specifying text color.
-            color = greenColor,
-            fontSize = 20.sp,
-            // on below line we are specifying font family
-            fontFamily = FontFamily.Default,
-            // on below line we are adding font weight
-            // and alignment for our text
-            fontWeight = FontWeight.Bold, textAlign = TextAlign.Center
-        )
-        //on below line we are adding spacer
         Spacer(modifier = Modifier.height(5.dp))
         // on below line we are creating a text field for our email.
         TextField(
@@ -128,18 +120,29 @@ fun postData() {
             // on below line we are adding on value change for text field.
             onValueChange = { userName.value = it },
             // on below line we are adding place holder as text as "Enter your email"
-            placeholder = { Text(text = "Enter your name") },
+            placeholder = {
+                Text(
+                    text = "Enter your name",
+                    style = TextStyle(color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)))
+            },
             // on below line we are adding modifier to it
             // and adding padding to it and filling max width
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            // on below line we are adding text style
-            // specifying color and font size to it.
-            textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
-            // on below line we are adding single line to it.
+            modifier = inputModifier.border(
+                BorderStroke(
+                    width = 4.dp,
+                    brush = Brush.horizontalGradient(listOf(Color(0xFFBB86FC), Color(0xFF6200EE))) // Gradient colors
+                ),
+                shape = RoundedCornerShape(50)
+            ),
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            ),
+            textStyle = inputTextStyle,
             singleLine = true,
         )
+
         // on below line we are adding spacer
         Spacer(modifier = Modifier.height(5.dp))
         // on below line we are creating a text field for our email.
@@ -149,21 +152,33 @@ fun postData() {
             // on below line we are adding on value change for text field.
             onValueChange = { job.value = it },
             // on below line we are adding place holder as text as "Enter your email"
-            placeholder = { Text(text = "Enter your job") },
+            placeholder = { Text(text = "Enter your job", style = TextStyle(color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f))) },
             // on below line we are adding modifier to it
             // and adding padding to it and filling max width
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            // on below line we are adding text style
-            // specifying color and font size to it.
-            textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
-            // on below line we ar adding single line to it.
+            modifier =  inputModifier.border(
+                BorderStroke(
+                    width = 4.dp,
+                    brush = Brush.horizontalGradient(listOf(Color(0xFFBB86FC), Color(0xFF6200EE))) // Gradient colors
+                ),
+                shape = RoundedCornerShape(50)
+            ),
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            ),
+            textStyle = inputTextStyle,
             singleLine = true,
         )
         // on below line we are adding spacer
         Spacer(modifier = Modifier.height(10.dp))
         // on below line we are creating a button
+
+        val verticalGradient = Brush.verticalGradient(
+            colors = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.primaryVariant),
+            startY = 0f,
+            endY = 100f
+        )
         Button(
             onClick = {
                 // on below line we are calling make payment method to update data.
@@ -173,8 +188,11 @@ fun postData() {
             },
             // on below line we are adding modifier to our button.
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+                .padding(12.dp)
+                .clickable(onClick = {})
+                .clip(RoundedCornerShape(4.dp))
+                .background(brush = verticalGradient)
+                .padding(12.dp)
         ) {
             // on below line we are adding text for our button
             Text(text = "Post Data", modifier = Modifier.padding(8.dp))
@@ -237,5 +255,4 @@ private fun postDataUsingRetrofit(
             result.value = "Error found is : " + t.message
         }
     })
-
 }
