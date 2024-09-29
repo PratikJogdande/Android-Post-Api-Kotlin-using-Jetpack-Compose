@@ -78,6 +78,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Preview
 @Composable
 fun postData() {
     val ctx = LocalContext.current
